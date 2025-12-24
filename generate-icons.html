@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator for PWA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        h1 {
+            text-align: center;
+            color: #27ae60;
+        }
+        .instructions {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .canvas-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .canvas-wrapper {
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            background: #1a1a2e;
+        }
+        button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #229954;
+        }
+        .button-group {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .settings {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .settings label {
+            display: block;
+            margin: 10px 0;
+        }
+        .settings input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #0f3460;
+            background: #0f3460;
+            color: white;
+            font-size: 16px;
+        }
+        .success {
+            background: #27ae60;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>📝 PWA Icon Generator</h1>
+    
+    <div class="instructions">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Customize your icon using the settings below</li>
+            <li>Preview will update automatically</li>
+            <li>Click "Download icon-192.png" and "Download icon-512.png"</li>
+            <li>Upload both files to the <code>icons/</code> folder in your project</li>
+            <li>Deploy to GitHub Pages</li>
+        </ol>
+    </div>
+
+    <div class="settings">
+        <h3>Customize Icon:</h3>
+        <label>
+            Text/Emoji:
+            <input type="text" id="iconText" value="📝" maxlength="2">
+        </label>
+        <label>
+            Background Color:
+            <input type="color" id="bgColor" value="#1a1a2e">
+        </label>
+        <label>
+            Text Color (if using text):
+            <input type="color" id="textColor" value="#ffffff">
+        </label>
+        <label>
+            Font Size:
+            <input type="range" id="fontSize" min="60" max="140" value="100">
+            <span id="fontSizeValue">100</span>
+        </label>
+    </div>
+
+    <div class="button-group">
+        <button onclick="generateIcons()">🎨 Update Preview</button>
+    </div>
+
+    <div class="canvas-container">
+        <div class="canvas-wrapper">
+            <h3>192x192</h3>
+            <canvas id="canvas192" width="192" height="192"></canvas>
+            <div class="button-group">
+                <button onclick="downloadIcon(192)">📥 Download icon-192.png</button>
+            </div>
+        </div>
+        
+        <div class="canvas-wrapper">
+            <h3>512x512</h3>
+            <canvas id="canvas512" width="512" height="512"></canvas>
+            <div class="button-group">
+                <button onclick="downloadIcon(512)">📥 Download icon-512.png</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="success" id="success">
+        ✅ Icon downloaded! Upload to icons/ folder in your project.
+    </div>
+
+    <script>
+        // Generate icons on load
+        window.onload = () => {
+            generateIcons();
+        };
+
+        // Update font size display
+        document.getElementById('fontSize').addEventListener('input', (e) => {
+            document.getElementById('fontSizeValue').textContent = e.target.value;
+        });
+
+        // Auto-update on any change
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', generateIcons);
+        });
+
+        function generateIcons() {
+            const text = document.getElementById('iconText').value;
+            const bgColor = document.getElementById('bgColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const fontSize = document.getElementById('fontSize').value;
+
+            drawIcon('canvas192', 192, text, bgColor, textColor, fontSize);
+            drawIcon('canvas512', 512, text, bgColor, textColor, fontSize * 2.67); // Scale up for 512
+        }
+
+        function drawIcon(canvasId, size, text, bgColor, textColor, fontSize) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Draw background with rounded corners
+            ctx.fillStyle = bgColor;
+            roundRect(ctx, 0, 0, size, size, size * 0.15);
+            ctx.fill();
+
+            // Draw text/emoji
+            ctx.fillStyle = textColor;
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, size / 2, size / 2);
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            // Show success message
+            const success = document.getElementById('success');
+            success.style.display = 'block';
+            setTimeout(() => {
+                success.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

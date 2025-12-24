@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#b2ebf2">
+    <meta name="description" content="Prompt Generator untuk Facebook Posting - 7 Modules">
+    
+    <title>Prompt Posting Generator</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Prompt Generator">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>📝 Prompt Posting Generator</h1>
+        <p class="subtitle">Build Your Perfect Prompt</p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Module Selection -->
+        <section id="module-selection" class="section active">
+            <h2>Pilih Module</h2>
+            <div class="module-grid">
+                <button class="module-card" data-module="1" style="border-left: 4px solid #3498db;">
+                    <span class="module-icon">🔵</span>
+                    <h3>Politik Malaysia</h3>
+                    <p>Kerajaan, pembangkang, polisi</p>
+                </button>
+                
+                <button class="module-card" data-module="2" style="border-left: 4px solid #e67e22;">
+                    <span class="module-icon">🟠</span>
+                    <h3>Isu Sosial</h3>
+                    <p>Kos hidup, pendidikan, nilai</p>
+                </button>
+                
+                <button class="module-card" data-module="3" style="border-left: 4px solid #9b59b6;">
+                    <span class="module-icon">🟣</span>
+                    <h3>Trend Viral</h3>
+                    <p>TikTok, Twitter, viral issues</p>
+                </button>
+                
+                <button class="module-card" data-module="4" style="border-left: 4px solid #e74c3c;">
+                    <span class="module-icon">🔴</span>
+                    <h3>Geopolitik</h3>
+                    <p>Global politics, international</p>
+                </button>
+                
+                <button class="module-card" data-module="5" style="border-left: 4px solid #2c3e50;">
+                    <span class="module-icon">⚫</span>
+                    <h3>Konspirasi</h3>
+                    <p>Alternative narratives, questions</p>
+                </button>
+                
+                <button class="module-card" data-module="6" style="border-left: 4px solid #27ae60;">
+                    <span class="module-icon">🟢</span>
+                    <h3>Response to Post</h3>
+                    <p>Counter argument dengan tenang</p>
+                </button>
+                
+                <button class="module-card" data-module="7" style="border-left: 4px solid #f39c12;">
+                    <span class="module-icon">🟡</span>
+                    <h3>Cerita Kelakar</h3>
+                    <p>Personal stories, ironic, relatable</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Input Form (Hidden initially) -->
+        <section id="input-form" class="section">
+            <div class="form-header">
+                <button id="back-btn" class="btn-back">← Back</button>
+                <h2 id="form-title">Module Title</h2>
+            </div>
+
+            <form id="prompt-form">
+                <!-- Common Fields -->
+                <div class="form-group" id="topic-group">
+                    <label for="topic">Topik / Situasi:</label>
+                    <textarea id="topic" rows="3" placeholder="Masukkan topik atau situasi..." required></textarea>
+                </div>
+
+                <!-- Module 6 Specific -->
+                <div class="form-group hidden" id="post-type-group">
+                    <label>Post Type:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="postType" value="standalone" checked>
+                            <span><strong>Standalone Post</strong> (Post di wall sendiri)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="postType" value="direct">
+                            <span><strong>Direct Reply</strong> (Reply terus di post mereka)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group hidden" id="original-post-group">
+                    <label for="originalPost">Original Post:</label>
+                    <textarea id="originalPost" rows="4" placeholder="Paste post yang nak respond..."></textarea>
+                </div>
+
+                <div class="form-group hidden" id="stance-group">
+                    <label for="stance">Stance:</label>
+                    <select id="stance">
+                        <option value="disagree">Disagree (Tidak Setuju)</option>
+                        <option value="agree">Agree (Setuju)</option>
+                        <option value="nuanced">Nuanced (Neutral/Bergantung)</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="angle-input-group">
+                    <label for="angleInput">Angle to Highlight:</label>
+                    <input type="text" id="angleInput" placeholder="Contoh: Ekonomi dulu vs sekarang berbeza">
+                </div>
+
+                <div class="form-group hidden" id="response-tone-group">
+                    <label for="responseTone">Tone:</label>
+                    <select id="responseTone">
+                        <option value="gentle">Gentle (Lembut)</option>
+                        <option value="firm">Firm (Tegas)</option>
+                        <option value="sarcastic">Sarcastic Light (Sinis Ringan)</option>
+                    </select>
+                </div>
+
+                <!-- Module 7 Specific -->
+                <div class="form-group hidden" id="irony-group">
+                    <label for="irony">The Irony/Twist:</label>
+                    <input type="text" id="irony" placeholder="Contoh: Plan nak impress, tapi end up disaster">
+                </div>
+
+                <div class="form-group hidden" id="story-tone-group">
+                    <label for="storyTone">Story Tone:</label>
+                    <select id="storyTone">
+                        <option value="conversational">Conversational (Borak-Borak)</option>
+                        <option value="deadpan">Deadpan (Sinis & Ringkas)</option>
+                        <option value="detailed">Detailed Story Arc (Cerita Penuh)</option>
+                    </select>
+                </div>
+
+                <!-- Common Settings -->
+                <div class="form-group" id="language-group">
+                    <label for="language">Bahasa Mix:</label>
+                    <select id="language">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <div class="form-group" id="tone-group">
+                    <label for="tone">Tone Intensity:</label>
+                    <select id="tone">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <div class="form-group" id="length-group">
+                    <label for="length">Length:</label>
+                    <select id="length">
+                        <option value="3-5">3-5 paragraphs (Sederhana - default)</option>
+                        <option value="2-3">2-3 paragraphs (Pendek)</option>
+                        <option value="5-7">5-7 paragraphs (Panjang)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="angle-group">
+                    <label for="angle">Angle:</label>
+                    <select id="angle">
+                        <!-- Options will be populated based on module -->
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Prompt 🚀</button>
+            </form>
+        </section>
+
+        <!-- Output Section (Hidden initially) -->
+        <section id="output-section" class="section">
+            <div class="output-header">
+                <button id="back-to-form-btn" class="btn-back">← Edit</button>
+                <h2>Your Prompt</h2>
+            </div>
+
+            <div class="output-container">
+                <div class="output-actions">
+                    <button id="copy-btn" class="btn-copy">📋 Copy Prompt</button>
+                    <button id="save-btn" class="btn-save">💾 Save to Favorites</button>
+                </div>
+                
+                <div class="prompt-output" id="prompt-output">
+                    <!-- Generated prompt will appear here -->
+                </div>
+                
+                <div class="copy-success hidden" id="copy-success">
+                    ✅ Copied to clipboard!
+                </div>
+            </div>
+
+            <div class="usage-instruction">
+                <h3>📌 How to Use:</h3>
+                <ol>
+                    <li>Copy prompt di atas</li>
+                    <li>Paste ke Claude atau ChatGPT</li>
+                    <li>AI akan research & generate posting</li>
+                </ol>
+            </div>
+
+            <button id="new-prompt-btn" class="btn-secondary">Create New Prompt</button>
+        </section>
+
+        <!-- Favorites Section -->
+        <section id="favorites-section" class="section">
+            <h2>💾 Saved Favorites</h2>
+            <div id="favorites-list" class="favorites-list">
+                <p class="empty-state">No saved prompts yet</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-view="modules">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Modules</span>
+        </button>
+        <button class="nav-btn" data-view="favorites">
+            <span class="nav-icon">💾</span>
+            <span class="nav-label">Favorites</span>
+        </button>
+    </nav>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Aziz Mohamad</p>
+        <p class="division">Personal Development Division</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/prompts.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
