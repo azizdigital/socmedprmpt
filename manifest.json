@@ -2,7 +2,7 @@
     "name": "Prompt Posting Generator",
     "short_name": "Prompt Gen",
     "description": "Generate prompts untuk Facebook posting - 7 Modules by Aziz Mohamad",
-    "start_url": "/",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#e0f7fa",
     "theme_color": "#b2ebf2",
