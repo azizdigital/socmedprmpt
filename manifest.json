@@ -2,7 +2,7 @@
     "name": "Prompt Posting Generator",
     "short_name": "Prompt Gen",
     "description": "Generate prompts untuk Facebook posting - 7 Modules by Aziz Mohamad",
-    "start_url": "/index.html",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#e0f7fa",
     "theme_color": "#b2ebf2",
@@ -28,14 +28,14 @@
             "name": "Politik Malaysia",
             "short_name": "Politik",
             "description": "Generate prompt untuk politik Malaysia",
-            "url": "/?module=1",
+            "url": "./?module=1",
             "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
         },
         {
             "name": "Isu Sosial",
             "short_name": "Sosial",
             "description": "Generate prompt untuk isu sosial",
-            "url": "/?module=2",
+            "url": "./?module=2",
             "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
         }
     ]
